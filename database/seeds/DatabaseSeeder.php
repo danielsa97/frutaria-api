@@ -12,20 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            StatusSeeder::class,
-            EcommerceSeeder::class,
-            ProfileTableSeeder::class,
-            UserSeeder::class,
-            NationsSeeder::class,
-            BrazilStatesSeeder::class,
-            BrazilCitiesSeeder::class,
+            UserSeeder::class
         ]);
-
-        //Fake Seeders
-        if (env('APP_ENV') === 'local') {
-            $this->call([
-                CustomerSeeder::class,
-            ]);
-        }
     }
 }

@@ -1,20 +1,12 @@
 <?php
 
-namespace App\DataTables\Catalog;
+namespace App\DataTables\Setting;
 
-
-use App\Models\Brand;
-use Yajra\DataTables\DataTableAbstract;
+use App\User;
 use Yajra\DataTables\Services\DataTable;
 
-class BrandDataTable extends DataTable
+class UserDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param mixed $query Results from query() method.
-     * @return DataTableAbstract
-     */
     public function dataTable($query)
     {
         return datatables($query)
@@ -30,21 +22,18 @@ class BrandDataTable extends DataTable
                     </div>";
             })
             ->editColumn('status', 'datatable.status-label');
-
     }
 
 
-    public function query(Brand $brand)
+    public function query(User $model)
     {
-        return $brand->newQuery()
-            ->join('status', 'brands.status_id', 'status.id')
-            ->select('brands.id', 'name', 'brands.description', 'status.description as status');
+        return $model->newQuery()->select('id', 'name', 'email', 'status');
     }
 
     public function html()
     {
         return $this->builder()
-            ->setTableId('brand_datatable')
+            ->setTableId('user_datatable')
             ->columns($this->getColumns())
             ->parameters($this->getBuilderParameters());
     }
@@ -61,9 +50,10 @@ class BrandDataTable extends DataTable
                 'printable' => false,
                 'width' => '60px'
             ],
-            'name' => ['title' => 'Nome', 'width' => '200px',],
-            'description' => ['title' => 'Descrição', 'name' => 'brands.description'],
-            'status' => ['title' => 'Status', 'name' => 'status.description', 'width' => '50px', 'class' => 'text-center']
+            'name' => ['title' => 'Nome'],
+            'email' => ['title' => 'E-mail'],
+            'profile' => ['title' => 'Perfil', 'name' => 'profiles.name'],
+            'status' => ['title' => 'Status', 'width' => '50px', 'class' => 'text-center']
         ];
     }
 
@@ -74,6 +64,6 @@ class BrandDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'catalog_brand_' . date('YmdHis');
+        return 'users_' . date('YmdHis');
     }
 }
