@@ -1,21 +1,13 @@
 <?php
 
-namespace App\DataTables\Catalog;
+namespace App\DataTables\Setting;
 
-
-use App\Models\Category;
-use Illuminate\Database\Eloquent\Builder;
-use Yajra\DataTables\DataTableAbstract;
+use App\Models\Cliente;
+use App\User;
 use Yajra\DataTables\Services\DataTable;
 
-class CategoryDataTable extends DataTable
+class ClienteDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param mixed $query Results from query() method.
-     * @return DataTableAbstract
-     */
     public function dataTable($query)
     {
         return datatables($query)
@@ -30,24 +22,19 @@ class CategoryDataTable extends DataTable
                       </div>
                     </div>";
             })
-            ->addColumn('department', function ($category) {
-                return view('datatable.catalog.category.departments-label', ['departments' => $category->departments->pluck('name')]);
-            })
             ->editColumn('status', 'datatable.status-label');
     }
 
 
-    public function query(Category $model)
+    public function query(Cliente $model)
     {
-        return $model->join('status', 'categories.status_id', 'status.id')
-            ->leftJoin('categories as parent', 'categories.category_id', 'parent.id')
-            ->select('categories.id', 'parent.name as parent_category', 'categories.name', 'categories.description', 'status.description as status');
+        return $model->newQuery()->select('id', 'name', 'email', 'status');
     }
 
     public function html()
     {
         return $this->builder()
-            ->setTableId('category_datatable')
+            ->setTableId('user_datatable')
             ->columns($this->getColumns())
             ->parameters($this->getBuilderParameters());
     }
@@ -64,11 +51,10 @@ class CategoryDataTable extends DataTable
                 'printable' => false,
                 'width' => '60px'
             ],
-            'name' => ['title' => 'Nome', 'width' => '200px',],
-            'description' => ['title' => 'Descrição', 'name' => 'categories.description'],
-            'department' => ['title' => 'Departamento', 'orderable' => false, 'searchable' => false],
-            'parent_category' => ['title' => 'Categoria Pai', 'name' => 'parent.name'],
-            'status' => ['title' => 'Status', 'name' => 'status.description', 'width' => '50px', 'class' => 'text-center']
+            'name' => ['title' => 'Nome'],
+            'email' => ['title' => 'E-mail'],
+            'profile' => ['title' => 'Perfil', 'name' => 'profiles.name'],
+            'status' => ['title' => 'Status', 'width' => '50px', 'class' => 'text-center']
         ];
     }
 
@@ -79,6 +65,6 @@ class CategoryDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'catalog_brand_' . date('YmdHis');
+        return 'cliente_' . date('YmdHis');
     }
 }

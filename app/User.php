@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\Models\Image;
-use App\Models\Status;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -39,20 +37,11 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function status()
-    {
-        return $this->belongsTo(Status::class, 'status_id', 'id')->where('type', 'general');
-    }
-
     public function setPasswordAttribute($value)
     {
         return $this->attributes['password'] = bcrypt($value);
     }
 
-    public function image()
-    {
-        return $this->morphOne(Image::class, 'imageable');
-    }
 
     /**
      * @inheritDoc
