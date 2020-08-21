@@ -4,7 +4,6 @@
 namespace App\Traits;
 
 
-use App\Services\StatusService;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -16,18 +15,12 @@ trait ChangeGeneralStatusTrait
     {
         try {
             $model = self::find($id);
-            $newStatus = StatusService::get('general', $model->status->value === 'A' ? 'I' : 'A');
-            if ($newStatus) {
-                $model->status_id = $newStatus->id;
-                $model->save();
-                return new JsonResponse($model);
-            }
-            throw new Exception("Status inválido", 500);
+            $model->status = $model->status === 'A' ? 'I' : 'A';
+            $model->save();
+            return new JsonResponse($model);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            throw new HttpResponseException(response()->json([
-                "message" => $exception->getMessage(),
-            ], $exception->getCode()));
+            throw new HttpResponseException(response()->json("Falha na alteração do status", 500));
         }
     }
 }

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\DataTables\Setting;
+namespace App\DataTables;
 
 use App\Models\Cliente;
-use App\User;
 use Yajra\DataTables\Services\DataTable;
 
 class ClienteDataTable extends DataTable
@@ -28,13 +27,13 @@ class ClienteDataTable extends DataTable
 
     public function query(Cliente $model)
     {
-        return $model->newQuery()->select('id', 'name', 'email', 'status');
+        return $model->newQuery()->select('nome', 'cpf', 'status');
     }
 
     public function html()
     {
         return $this->builder()
-            ->setTableId('user_datatable')
+            ->setTableId('cliente_datatable')
             ->columns($this->getColumns())
             ->parameters($this->getBuilderParameters());
     }
@@ -52,8 +51,7 @@ class ClienteDataTable extends DataTable
                 'width' => '60px'
             ],
             'name' => ['title' => 'Nome'],
-            'email' => ['title' => 'E-mail'],
-            'profile' => ['title' => 'Perfil', 'name' => 'profiles.name'],
+            'email' => ['title' => 'CPF'],
             'status' => ['title' => 'Status', 'width' => '50px', 'class' => 'text-center']
         ];
     }

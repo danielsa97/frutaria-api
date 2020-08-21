@@ -1,1 +1,1 @@
-<span class='badge {{$status === 'Ativo' ? 'badge-success' : 'badge-danger'}}'>{{$status}}</span>
+<span class='badge {{$status === 'A' ? 'badge-success' : 'badge-danger'}}'>{{$status ==='A' ?'Ativo':'Inativo'}}</span>
