@@ -2,10 +2,11 @@
 
 namespace App\DataTables;
 
-use App\Models\Cliente;
 use App\Models\Venda;
 use Carbon\Carbon;
 use Yajra\DataTables\Services\DataTable;
+use \Illuminate\Support\Facades\DB;
+
 
 class VendaDataTable extends DataTable
 {
@@ -34,9 +35,13 @@ class VendaDataTable extends DataTable
             ->newQuery()
             ->join('clientes', 'vendas.cliente_id', 'clientes.id')
             ->join('fruta_venda', 'fruta_venda.venda_id', 'vendas.id')
-            ->select('vendas.id', 'clientes.nome', 'valor_venda', 'vendas.created_at')
-            ->selectRaw("SUM(fruta_venda.quantidade_fruta) as quantidade")
-            ->groupBy('vendas.id');
+            ->join(
+                DB::raw('(select sum(fv.quantidade_fruta) quantidade_frutas, fv.venda_id from fruta_venda fv group by fv.venda_id) AS q1'),
+                'fruta_venda.id', '=', 'q1.venda_id'
+            )
+            ->select('vendas.id', 'clientes.nome', 'q1.quantidade_frutas', 'vendas.valor_venda', 'vendas.created_at');
+
+
     }
 
     public function html()
@@ -60,7 +65,7 @@ class VendaDataTable extends DataTable
                 'width' => '60px'
             ],
             'nome' => ['title' => 'Cliente', 'name' => 'clientes.nome'],
-            'quantidade' => ['title' => 'Qtd.Itens', 'width' => '100px'],
+            'quantidade_frutas' => ['title' => 'Quantidade', 'name' => 'q1.quantidade_frutas'],
             'valor_venda' => ['title' => 'Valor(R$)', 'width' => '100px'],
             'created_at' => ['name' => 'created_at', 'title' => 'Data', 'width' => '100px']
         ];
