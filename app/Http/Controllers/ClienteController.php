@@ -38,9 +38,9 @@ class ClienteController extends Controller
     }
 
 
-    public function edit(int $userId)
+    public function edit(int $clienteId)
     {
-        return ClienteEditService::get($userId);
+        return ClienteEditService::get($clienteId);
     }
 
     public function changeStatus(int $clienteId)

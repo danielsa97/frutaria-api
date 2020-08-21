@@ -25,6 +25,15 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::put('{id}/change-status', 'ClienteController@changeStatus')->name('change-status');
     });
 
+    //Frutas
+    Route::group(['prefix' => 'fruta', 'as' => 'fruta.'], function () {
+        Route::get('/', 'FrutaController@index')->name('index');
+        Route::post('/', 'FrutaController@store')->name('store');
+        Route::get('{id}/edit', 'FrutaController@edit')->name('edit');
+        Route::put('{id}', 'FrutaController@update')->name('update');
+        Route::put('{id}/change-status', 'FrutaController@changeStatus')->name('change-status');
+    });
+
     //Users
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('/', 'UserController@index')->name('index');
