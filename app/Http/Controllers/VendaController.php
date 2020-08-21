@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\DataTables\VendaDataTable;
 use App\Http\Requests\VendaRequest;
 use App\Services\DataTableService;
+use App\Services\Venda\VendaDetalheService;
 use App\Services\Venda\VendaStoreService;
 
 class VendaController extends Controller
@@ -26,5 +27,10 @@ class VendaController extends Controller
     public function store(VendaRequest $request)
     {
         return VendaStoreService::store($request->except('_method'));
+    }
+
+    public function detalhe($venda)
+    {
+        return VendaDetalheService::get($venda);
     }
 }

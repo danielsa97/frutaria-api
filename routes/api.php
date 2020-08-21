@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/', 'VendaController@index')->name('index');
         Route::post('/', 'VendaController@store')->name('store');
         Route::get('{id}/show', 'VendaController@edit')->name('show');
+        Route::get('detalhe/{venda}', 'VendaController@detalhe')->name('detalhe');
     });
 
 });
