@@ -21,9 +21,6 @@ class ClienteDataTable extends DataTable
                       </div>
                     </div>";
             })
-            ->editColumn('cpf', function ($cliente) {
-                return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cliente->cpf);
-            })
             ->editColumn('status', 'datatable.status-label');
     }
 
@@ -54,7 +51,7 @@ class ClienteDataTable extends DataTable
                 'width' => '60px'
             ],
             'nome' => ['title' => 'Nome'],
-            'cpf' => ['title' => 'CPF'],
+            'cpf' => ['width' => '100px','title' => 'CPF'],
             'status' => ['title' => 'Status', 'width' => '50px', 'class' => 'text-center']
         ];
     }
