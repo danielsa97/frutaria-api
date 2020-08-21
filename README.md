@@ -5,7 +5,9 @@ conjunto com a interface "frutaria".\
 [DEMO ONLINE](https://danieldesa.com/project/frutaria/)\
 Dados de acesso:\
 E-mail: admin@admin.com\
-Senha: password
+Senha: password\
+
+API de TESTE: [https://frutaria-api.danieldesa.com](https://danieldesa.com/project/frutaria/)
 ## Tecnologias do projeto
  - Laravel
 ## Requisitos do Sistema
