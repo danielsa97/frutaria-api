@@ -18,4 +18,9 @@ class Venda extends Model
     {
         return $this->belongsTo(Cliente::class);
     }
+    //Accessors
+    public function getValorVendaAttribute($value)
+    {
+        return number_format($value, 2, ',', '.');
+    }
 }

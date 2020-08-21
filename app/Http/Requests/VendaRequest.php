@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-
+use App\Rules\CpfRule;
 use App\Services\CustomFormRequest;
 
-class UserRequest extends CustomFormRequest
+class VendaRequest extends CustomFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,17 @@ class UserRequest extends CustomFormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name' => "required",
-            'email' => "required|email|unique:users,email,{$this->id}",
-            'password' => ["confirmed", "nullable", "min:8"]
+        return [
+            'cliente_id' => 'required|numeric',
+            'fruta_id' => 'required|string'
         ];
+    }
 
-        if ($this->isMethod('POST')) {
-            array_push($rules['password'], "required");
-        }
-        return $rules;
+    public function attributes()
+    {
+        return [
+            'fruta_id' => 'fruta',
+            'cliente_id' => 'cliente'
+        ];
     }
 }

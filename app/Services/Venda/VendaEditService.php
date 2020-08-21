@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Services\User;
+namespace App\Services\Venda;
 
 
 use App\Services\EditInterface;
 use Illuminate\Http\JsonResponse;
 
-class UserEditService extends UserService implements EditInterface
+class VendaEditService extends FrutaService implements EditInterface
 {
     /**
      * @param int $id
@@ -15,7 +15,7 @@ class UserEditService extends UserService implements EditInterface
      */
     public static function get(int $id): JsonResponse
     {
-        $user = self::find($id);
-        return new JsonResponse($user);
+        $fruta = self::find($id);
+        return new JsonResponse($fruta);
     }
 }

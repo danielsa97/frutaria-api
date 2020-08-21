@@ -8,6 +8,7 @@ use App\DataTables\ClienteDataTable;
 use App\Http\Requests\ClienteRequest;
 use App\Services\Cliente\ClienteChangeStatusService;
 use App\Services\Cliente\ClienteEditService;
+use App\Services\Cliente\ClienteSearchService;
 use App\Services\Cliente\ClienteStoreService;
 use App\Services\Cliente\ClienteUpdateService;
 use App\Services\DataTableService;
@@ -41,6 +42,11 @@ class ClienteController extends Controller
     public function edit(int $clienteId)
     {
         return ClienteEditService::get($clienteId);
+    }
+
+    public function search()
+    {
+        return ClienteSearchService::search();
     }
 
     public function changeStatus(int $clienteId)
