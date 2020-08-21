@@ -15,6 +15,8 @@ class ClienteEditService extends ClienteService implements EditInterface
      */
     public static function get(int $id): JsonResponse
     {
-        return new JsonResponse(self::find($id));
+        $cliente = self::find($id);
+        $cliente['cpf'] = preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cliente['cpf']);
+        return new JsonResponse($cliente);
     }
 }

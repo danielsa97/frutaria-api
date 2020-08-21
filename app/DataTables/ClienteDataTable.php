@@ -21,13 +21,16 @@ class ClienteDataTable extends DataTable
                       </div>
                     </div>";
             })
+            ->editColumn('cpf', function ($cliente) {
+                return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cliente->cpf);
+            })
             ->editColumn('status', 'datatable.status-label');
     }
 
 
     public function query(Cliente $model)
     {
-        return $model->newQuery()->select('nome', 'cpf', 'status');
+        return $model->newQuery()->select('id', 'nome', 'cpf', 'status');
     }
 
     public function html()
@@ -50,8 +53,8 @@ class ClienteDataTable extends DataTable
                 'printable' => false,
                 'width' => '60px'
             ],
-            'name' => ['title' => 'Nome'],
-            'email' => ['title' => 'CPF'],
+            'nome' => ['title' => 'Nome'],
+            'cpf' => ['title' => 'CPF'],
             'status' => ['title' => 'Status', 'width' => '50px', 'class' => 'text-center']
         ];
     }

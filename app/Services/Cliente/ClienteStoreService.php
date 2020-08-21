@@ -20,6 +20,7 @@ class ClienteStoreService implements StoreInterface
     public static function store(array $request): JsonResponse
     {
         try {
+            $request['cpf'] = preg_replace("/[^0-9]/", "", $request['cpf']);
             $cliente = Cliente::query()->create($request);
             return new JsonResponse($cliente, 201);
         } catch (Exception $exception) {

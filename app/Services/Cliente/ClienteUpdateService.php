@@ -21,6 +21,7 @@ class ClienteUpdateService extends ClienteService implements UpdateInterface
     {
         try {
             $cliente = self::find($id);
+            $request['cpf'] = preg_replace("/[^0-9]/", "", $request['cpf']);
             $cliente->update($request);
             $cliente->save();
             return ClienteEditService::get($id);

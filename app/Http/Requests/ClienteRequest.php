@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CpfRule;
 use App\Services\CustomFormRequest;
 
 class ClienteRequest extends CustomFormRequest
@@ -25,7 +26,7 @@ class ClienteRequest extends CustomFormRequest
     {
         return [
             'nome' => 'required',
-            'cpf' => 'required'
+            'cpf' => ['required', new CpfRule]
         ];
     }
 }
