@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\Cliente;
+namespace App\Services\Fruta;
 
 use App\Services\UpdateInterface;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 
-class ClienteUpdateService extends ClienteService implements UpdateInterface
+class FrutaUpdateService extends FrutaService implements UpdateInterface
 {
 
     /**
@@ -20,13 +20,13 @@ class ClienteUpdateService extends ClienteService implements UpdateInterface
     public static function update(int $id, array $request): JsonResponse
     {
         try {
-            $cliente = self::find($id);
-            $cliente->update($request);
-            $cliente->save();
-            return ClienteEditService::get($id);
+            $fruta = self::find($id);
+            $fruta->update($request);
+            $fruta->save();
+            return FrutaEditService::get($id);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            throw new HttpResponseException(response()->json("Falha na atualização do cliente", 500));
+            throw new HttpResponseException(response()->json("Falha na atualização dos dados da fruta", 500));
         }
     }
 }

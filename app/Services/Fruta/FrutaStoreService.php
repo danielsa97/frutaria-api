@@ -1,17 +1,18 @@
 <?php
 
 
-namespace App\Services\Cliente;
+namespace App\Services\Fruta;
 
 
 use App\Models\Cliente;
+use App\Models\Fruta;
 use App\Services\StoreInterface;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 
-class ClienteStoreService implements StoreInterface
+class FrutaStoreService implements StoreInterface
 {
     /**
      * @param array $request
@@ -20,11 +21,11 @@ class ClienteStoreService implements StoreInterface
     public static function store(array $request): JsonResponse
     {
         try {
-            $cliente = Cliente::query()->create($request);
-            return new JsonResponse($cliente, 201);
+            $fruta = Fruta::query()->create($request);
+            return new JsonResponse($fruta, 201);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            throw new HttpResponseException(response()->json("Falha no cadastro de cliente", 500));
+            throw new HttpResponseException(response()->json("Falha no cadastro da fruta", 500));
         }
     }
 }
