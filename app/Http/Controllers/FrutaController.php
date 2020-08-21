@@ -9,6 +9,7 @@ use App\Http\Requests\FrutaRequest;
 use App\Services\DataTableService;
 use App\Services\Fruta\FrutaChangeStatusService;
 use App\Services\Fruta\FrutaEditService;
+use App\Services\Fruta\FrutaSearchService;
 use App\Services\Fruta\FrutaStoreService;
 use App\Services\Fruta\FrutaUpdateService;
 
@@ -40,6 +41,11 @@ class FrutaController extends Controller
     public function edit(int $frutaId)
     {
         return FrutaEditService::get($frutaId);
+    }
+
+    public function search()
+    {
+        return FrutaSearchService::search();
     }
 
     public function changeStatus(int $clienteId)

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Catalog\Department;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentSearchResource extends JsonResource
+class SearchResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,7 @@ class DepartmentSearchResource extends JsonResource
     {
         return [
             'code' => $this->id ?? null,
-            'label' => $this->name ?? null,
+            'label' => $this->nome ?? null
         ];
     }
 }

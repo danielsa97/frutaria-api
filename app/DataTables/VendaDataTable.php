@@ -3,9 +3,11 @@
 namespace App\DataTables;
 
 use App\Models\Cliente;
+use App\Models\Venda;
+use Carbon\Carbon;
 use Yajra\DataTables\Services\DataTable;
 
-class ClienteDataTable extends DataTable
+class VendaDataTable extends DataTable
 {
     public function dataTable($query)
     {
@@ -16,24 +18,31 @@ class ClienteDataTable extends DataTable
                     <div class='dropdown'>
                       <button class='btn btn-sm btn-primary dropdown-toggle' data-toggle='dropdown'>Ações</button>
                       <div class='dropdown-menu'>
-                        <button class='dropdown-item' data-emit='edit' data-id='{$query->id}'>Editar</button>
-                        <button class='dropdown-item' data-emit='change-status' data-id='{$query->id}'>Alterar Status</button>
+                        <button class='dropdown-item' data-emit='detalhes' data-id='{$query->id}'>Detalhes</button>
                       </div>
                     </div>";
             })
-            ->editColumn('status', 'datatable.status-label');
+            ->editColumn('created_at', function ($venda) {
+                return Carbon::parse($venda->created_at)->format('d/m/Y');
+            });
     }
 
 
-    public function query(Cliente $model)
+    public function query(Venda $model)
     {
-        return $model->newQuery()->select('id', 'nome', 'cpf', 'status');
+        return $model
+            ->newQuery()
+            ->join('clientes', 'vendas.cliente_id', 'clientes.id')
+            ->join('fruta_venda', 'fruta_venda.venda_id', 'vendas.id')
+            ->select('vendas.id', 'clientes.nome', 'valor_venda', 'vendas.created_at')
+            ->selectRaw("SUM(fruta_venda.quantidade_fruta) as quantidade")
+            ->groupBy('vendas.id');
     }
 
     public function html()
     {
         return $this->builder()
-            ->setTableId('cliente_datatable')
+            ->setTableId('venda_datatable')
             ->columns($this->getColumns())
             ->parameters($this->getBuilderParameters());
     }
@@ -50,9 +59,10 @@ class ClienteDataTable extends DataTable
                 'printable' => false,
                 'width' => '60px'
             ],
-            'nome' => ['title' => 'Nome'],
-            'cpf' => ['width' => '100px','title' => 'CPF'],
-            'status' => ['title' => 'Status', 'width' => '50px', 'class' => 'text-center']
+            'nome' => ['title' => 'Cliente', 'name' => 'clientes.nome'],
+            'quantidade' => ['title' => 'Qtd.Itens', 'width' => '100px'],
+            'valor_venda' => ['title' => 'Valor(R$)', 'width' => '100px'],
+            'created_at' => ['name' => 'created_at', 'title' => 'Data', 'width' => '100px']
         ];
     }
 
@@ -63,6 +73,6 @@ class ClienteDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'cliente_' . date('YmdHis');
+        return 'venda_' . date('YmdHis');
     }
 }

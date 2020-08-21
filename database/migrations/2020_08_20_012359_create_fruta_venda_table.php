@@ -20,7 +20,6 @@ class CreateFrutaVendaTable extends Migration
             $table->integer('quantidade_fruta');
             $table->foreign('venda_id')->references('id')->on('vendas');
             $table->foreign('fruta_id')->references('id')->on('frutas');
-            $table->timestamps();
         });
     }
 

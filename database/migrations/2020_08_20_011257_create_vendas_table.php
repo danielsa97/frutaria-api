@@ -17,7 +17,6 @@ class CreateVendasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('cliente_id');
             $table->decimal('valor_venda');
-            $table->date('data_venda');
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->timestamps();
         });

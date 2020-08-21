@@ -14,7 +14,7 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth', 'as' => 'auth.'], funct
 
 //AUTHENTICATED ROUTES
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('/home', 'HomeController@index')->name('home.index');
+    Route::get('/home/{name}', 'HomeController@index')->name('home.index');
 
     //Clientes
     Route::group(['prefix' => 'cliente', 'as' => 'cliente.'], function () {
@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/', 'ClienteController@store')->name('store');
         Route::get('{id}/edit', 'ClienteController@edit')->name('edit');
         Route::put('{id}', 'ClienteController@update')->name('update');
+        Route::get('search', 'ClienteController@search')->name('search');
         Route::put('{id}/change-status', 'ClienteController@changeStatus')->name('change-status');
     });
 
@@ -31,15 +32,15 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/', 'FrutaController@store')->name('store');
         Route::get('{id}/edit', 'FrutaController@edit')->name('edit');
         Route::put('{id}', 'FrutaController@update')->name('update');
+        Route::get('search', 'FrutaController@search')->name('search');
         Route::put('{id}/change-status', 'FrutaController@changeStatus')->name('change-status');
     });
 
-    //Users
-    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
-        Route::get('/', 'UserController@index')->name('index');
-        Route::post('/', 'UserController@store')->name('store');
-        Route::get('{id}/edit', 'UserController@edit')->name('edit');
-        Route::put('{id}', 'UserController@update')->name('update');
-        Route::put('{id}/change-status', 'UserController@changeStatus')->name('change-status');
+    //Vendas
+    Route::group(['prefix' => 'venda', 'as' => 'venda.'], function () {
+        Route::get('/', 'VendaController@index')->name('index');
+        Route::post('/', 'VendaController@store')->name('store');
+        Route::get('{id}/show', 'VendaController@edit')->name('show');
     });
+
 });
