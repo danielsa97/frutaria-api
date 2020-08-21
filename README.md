@@ -2,7 +2,7 @@
 Sistema de gerenciamento de venda de frutas(processo seletivo).
 Este é back-end do sistema, desenvolvido com Laravel o mesmo funciona em 
 conjunto com a interface "frutaria".\
-[DEMO ONLINE](https://danieldesa.com/project/frutaria/)\
+[DEMO ONLINE](https://frutaria.danieldesa.com)\
 Dados de acesso:\
 E-mail: admin@admin.com\
 Senha: password\
