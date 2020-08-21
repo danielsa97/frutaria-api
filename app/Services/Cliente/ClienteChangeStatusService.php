@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Services\Setting\User;
+namespace App\Services\Cliente;
 
 use App\Traits\ChangeGeneralStatusTrait;
 
-class UserChangeStatusService extends UserService
+class ClienteChangeStatusService extends ClienteService
 {
     use ChangeGeneralStatusTrait;
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\Setting\User;
+namespace App\Services\User;
 
 
 use App\Services\EditInterface;

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\DataTables\Setting;
+namespace App\DataTables;
 
 use App\Models\Cliente;
-use App\User;
 use Yajra\DataTables\Services\DataTable;
 
 class ClienteDataTable extends DataTable
@@ -22,19 +21,22 @@ class ClienteDataTable extends DataTable
                       </div>
                     </div>";
             })
+            ->editColumn('cpf', function ($cliente) {
+                return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cliente->cpf);
+            })
             ->editColumn('status', 'datatable.status-label');
     }
 
 
     public function query(Cliente $model)
     {
-        return $model->newQuery()->select('id', 'name', 'email', 'status');
+        return $model->newQuery()->select('id', 'nome', 'cpf', 'status');
     }
 
     public function html()
     {
         return $this->builder()
-            ->setTableId('user_datatable')
+            ->setTableId('cliente_datatable')
             ->columns($this->getColumns())
             ->parameters($this->getBuilderParameters());
     }
@@ -51,9 +53,8 @@ class ClienteDataTable extends DataTable
                 'printable' => false,
                 'width' => '60px'
             ],
-            'name' => ['title' => 'Nome'],
-            'email' => ['title' => 'E-mail'],
-            'profile' => ['title' => 'Perfil', 'name' => 'profiles.name'],
+            'nome' => ['title' => 'Nome'],
+            'cpf' => ['title' => 'CPF'],
             'status' => ['title' => 'Status', 'width' => '50px', 'class' => 'text-center']
         ];
     }
